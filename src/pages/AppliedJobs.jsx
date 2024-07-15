@@ -4,6 +4,7 @@ import UpdateStatusModal from "../components/UpdateStatusModal";
 import Loader from "../components/Loader";
 import axios from "axios";
 import moment from "moment";
+import Empty from "../components/Empty";
 
 const AppliedJobs = () => {
   const [showModal, setShowModal] = useState(false);
