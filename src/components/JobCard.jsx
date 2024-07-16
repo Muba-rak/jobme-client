@@ -30,7 +30,7 @@ const JobCard = ({
           <p className="d-inline-block text-info bg-info-subtle  px-3 text-capitalize rounded-2">
             {mode}{" "}
           </p>
-          <p className="text-dark"> $ {salaryRange} </p>
+          <p className="text-dark"> $ {salaryRange}k </p>
         </div>
       </div>
 
