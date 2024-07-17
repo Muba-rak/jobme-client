@@ -13,6 +13,7 @@ const SearchForm = () => {
   const [lTpye, setLType] = useState("");
 
   const [locations, setLocations] = useState([]);
+  const [industries, setIndustries] = useState([]);
   const path = useLocation().pathname;
   const handleSelection = (e) => {
     e.preventDefault();
@@ -33,6 +34,7 @@ const SearchForm = () => {
         "https://jobme-server.onrender.com/api/v1/jobs/locations"
       );
       setLocations(data.location);
+      setIndustries(data.industries);
     };
     getLocations();
   }, []);
@@ -66,14 +68,15 @@ const SearchForm = () => {
             onChange={(e) => setIType(e.target.value)}
           >
             <option value="">Select Industry</option>
-            {industry.map((type, i) => {
-              return (
-                <option key={i} value={type}>
-                  {" "}
-                  {type}{" "}
-                </option>
-              );
-            })}
+            {industries &&
+              industries.map((type, i) => {
+                return (
+                  <option key={i} value={type}>
+                    {" "}
+                    {type}{" "}
+                  </option>
+                );
+              })}
           </select>
           <select
             name=""
