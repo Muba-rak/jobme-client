@@ -141,16 +141,9 @@ const Register = () => {
             </div>
           )}
         </div>
-
-        <div className="d-flex justify-content-between align-items-center mx-auto my-3 check">
-          <div className="d-flex justify-content-center align-items-center gap-2">
-            <input type="checkbox" className="form-check-input shadow-none" />
-            <span className="pt-2">Remember Me</span>
-          </div>
-        </div>
         <MyButton
           content={isSubmitting ? "Signing up....." : "Sign Up"}
-          extraClass={"submitbtn mx-auto d-block w-100"}
+          extraClass={"submitbtn mx-auto d-block w-100 mt-3"}
         />
 
         <div className="mt-3 text-center">
