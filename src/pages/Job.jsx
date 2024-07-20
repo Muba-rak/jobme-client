@@ -30,20 +30,22 @@ const Job = () => {
         ></div>
         <SearchForm />
         <section className="container py-5">
-          <div className="d-flex gap-2 gap-md-5 align-items-center container">
-            <p className="text-secondary fs-6">
-              Showing <span> {jobs.length}</span> of <span>{totalJobs} </span>{" "}
-              results{" "}
-            </p>
-            <p>
-              <button
-                className="btn btn-info text-white"
-                onClick={resetFilters}
-              >
-                Reset Filters
-              </button>
-            </p>
-          </div>
+          {!isLoading && (
+            <div className="d-flex gap-2 gap-md-5 align-items-center container">
+              <p className="text-secondary fs-6">
+                Showing <span> {jobs.length}</span> of <span>{totalJobs} </span>{" "}
+                results{" "}
+              </p>
+              <p>
+                <button
+                  className="btn btn-info text-white"
+                  onClick={resetFilters}
+                >
+                  Reset Filters
+                </button>
+              </p>
+            </div>
+          )}
           {!isLoading && jobs.length < 1 && (
             <Empty height={"200px"} content={"No Job fits your Search"} />
           )}

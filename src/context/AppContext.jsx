@@ -13,6 +13,11 @@ const AppContext = ({ children }) => {
   const [mode, setMode] = useState("");
   const [industry, setIndustry] = useState("");
   const [location, setLocation] = useState("");
+
+  const [jType, setJType] = useState("");
+  const [mType, setMType] = useState("");
+  const [iType, setIType] = useState("");
+  const [lTpye, setLType] = useState("");
   const updateJobType = (value) => {
     setPage(1);
     setJobType(value);
@@ -31,10 +36,16 @@ const AppContext = ({ children }) => {
     setPage(1);
   };
   const resetFilters = () => {
+    //reset state for search
     setJobType("");
     setMode("");
     setIndustry("");
     setLocation("");
+    //reset inputs
+    setJType("");
+    setMType("");
+    setLType("");
+    setIType("");
   };
 
   const url = "https://jobme-server.onrender.com/api/v1/jobs";
@@ -54,6 +65,15 @@ const AppContext = ({ children }) => {
     getJobs();
   }, [page, jobType, mode, industry, location]);
 
+  const handleSelection = (e) => {
+    e.preventDefault();
+    updateJobType(jType);
+    updateIndustry(iType);
+    updateLocation(lTpye);
+    updateMode(mType);
+    //reset input
+  };
+
   return (
     <GlobalContext.Provider
       value={{
@@ -68,6 +88,15 @@ const AppContext = ({ children }) => {
         updateLocation,
         updateMode,
         resetFilters,
+        lTpye,
+        setIType,
+        mType,
+        setMType,
+        iType,
+        setLType,
+        jType,
+        setJType,
+        handleSelection,
       }}
     >
       {children}

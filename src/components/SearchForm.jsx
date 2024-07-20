@@ -1,32 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { jobType, mode, industry } from "../data/jobs";
+import { jobType, mode } from "../data/jobs";
 import { useGlobalContext } from "../hooks/useGlobalContext";
 import axios from "axios";
 
 const SearchForm = () => {
-  const { updateJobType, updateIndustry, updateLocation, updateMode } =
-    useGlobalContext();
-  const [jType, setJType] = useState("");
-  const [mType, setMType] = useState("");
-  const [iType, setIType] = useState("");
-  const [lTpye, setLType] = useState("");
+  const {
+    updateJobType,
+    updateIndustry,
+    updateLocation,
+    updateMode,
+    lTpye,
+    mType,
+    iType,
+    jType,
+    setMType,
+    setIType,
+    setJType,
+    setLType,
+    handleSelection,
+  } = useGlobalContext();
 
   const [locations, setLocations] = useState([]);
   const [industries, setIndustries] = useState([]);
   const path = useLocation().pathname;
-  const handleSelection = (e) => {
-    e.preventDefault();
-    updateJobType(jType);
-    updateIndustry(iType);
-    updateLocation(lTpye);
-    updateMode(mType);
-    //reset input
-    setJType("");
-    setMType("");
-    setLType("");
-    setIType("");
-  };
 
   useEffect(() => {
     const getLocations = async () => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import MyButton from "../components/MyButton";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
@@ -19,12 +19,26 @@ const Login = () => {
     e.preventDefault();
     setShow(!show);
   };
+  const [remember, setRemember] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
+    reset,
   } = useForm({ resolver: yupResolver(loginschema) });
+
+  // Load saved credentials from local storage
+  useEffect(() => {
+    const savedEmail = localStorage.getItem("email");
+    const savedPassword = localStorage.getItem("password");
+    if (savedEmail && savedPassword) {
+      setValue("email", savedEmail);
+      setValue("password", savedPassword);
+      setRemember(true);
+    }
+  }, [setValue]);
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
@@ -38,11 +52,19 @@ const Login = () => {
       setIsSubmitting(false);
       if (result.success) {
         localStorage.setItem("token", result.token);
+        if (remember) {
+          localStorage.setItem("email", data.email);
+          localStorage.setItem("password", data.password);
+        } else {
+          localStorage.removeItem("email");
+          localStorage.removeItem("password");
+        }
         //redirect to login
         redirect("/");
       }
     } catch (error) {
       console.log(error);
+      reset();
       setIsSubmitting(false);
       toast.error(error?.response?.data?.error);
     }
@@ -98,7 +120,12 @@ const Login = () => {
 
         <div className="d-flex justify-content-between align-items-center mx-auto my-3 check neededwidth">
           <div className="d-flex justify-content-center align-items-center gap-2">
-            <input type="checkbox" className="form-check-input shadow-none" />
+            <input
+              type="checkbox"
+              className="form-check-input shadow-none"
+              checked={remember}
+              onChange={(e) => setRemember(e.target.checked)}
+            />
             <span className="pt-2">Remember Me</span>
           </div>
         </div>
