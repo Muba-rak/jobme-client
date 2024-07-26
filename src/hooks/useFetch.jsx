@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 export const useFetch = async (url) => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [isError, setIsError] = useState(false);
   const getData = async () => {
     try {
       const { data } = await axios(url);
@@ -11,10 +12,12 @@ export const useFetch = async (url) => {
       setIsLoading(false);
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
+      setIsError(false);
     }
   };
   useEffect(() => {
     getData();
   }, [url]);
-  return { isLoading, data };
+  return { isLoading, data, isError };
 };
