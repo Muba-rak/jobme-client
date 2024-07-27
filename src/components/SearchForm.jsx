@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { jobType, mode } from "../data/jobs";
 import { useGlobalContext } from "../hooks/useGlobalContext";
 import axios from "axios";
 
 const SearchForm = () => {
   const {
-    updateJobType,
-    updateIndustry,
-    updateLocation,
-    updateMode,
     lTpye,
     mType,
     iType,
@@ -35,10 +31,16 @@ const SearchForm = () => {
     };
     getLocations();
   }, []);
+  const redirect = useNavigate();
+  const handleHomeSearch = (e) => {
+    e.preventDefault();
+    redirect("/jobs");
+    handleSelection(e);
+  };
 
   return (
     <div className="searchform p-3">
-      <form onSubmit={handleSelection} className="container ">
+      <form className="container ">
         <div>
           <select
             name=""
@@ -111,13 +113,17 @@ const SearchForm = () => {
           </select>
           <div className="d-xl-flex align-items-center justify-content-center">
             {path === "/" ? (
-              <Link to="/jobs">
-                <button className="btn btn-info text-white py-2 px-xl-4 fs-5">
-                  Find Jobs
-                </button>
-              </Link>
+              <button
+                onClick={handleHomeSearch}
+                className="btn btn-info text-white py-2 px-xl-4 fs-5"
+              >
+                Find Jobs
+              </button>
             ) : (
-              <button className=" mt-2 mt-lg-0 btn btn-info text-white py-2 px-xl-4 fs-5">
+              <button
+                onClick={handleSelection}
+                className=" mt-2 mt-lg-0 btn btn-info text-white py-2 px-xl-4 fs-5"
+              >
                 Find Jobs
               </button>
             )}
