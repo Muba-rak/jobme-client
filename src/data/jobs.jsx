@@ -7,7 +7,7 @@ export const testimonials = [
     id: 1,
     image: T1,
     name: "John Doe",
-    location: "South Africa",
+    location: "United Kingdom",
     testimonial:
       "“Lorem ipsum dolor sit amet consectetur. Etiam elit nisl aliquam tempor purus ac. Vestibulum eu euismod enim elit. Nunc phasellus aliquet eu gravida massa vel.”",
   },
@@ -15,7 +15,7 @@ export const testimonials = [
     id: 2,
     image: T2,
     name: "Alice Beck",
-    location: "United Kingdom",
+    location: "Lagos, Nigeria",
     testimonial:
       "“Lorem ipsum dolor sit amet consectetur. Etiam elit nisl aliquam tempor purus ac. Vestibulum eu euismod enim elit. Nunc phasellus aliquet eu gravida massa vel.”",
   },
