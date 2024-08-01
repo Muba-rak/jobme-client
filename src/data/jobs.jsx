@@ -8,24 +8,21 @@ export const testimonials = [
     image: T1,
     name: "John Doe",
     location: "United Kingdom",
-    testimonial:
-      "“Lorem ipsum dolor sit amet consectetur. Etiam elit nisl aliquam tempor purus ac. Vestibulum eu euismod enim elit. Nunc phasellus aliquet eu gravida massa vel.”",
+    testimonial: `"This job application app is a game-changer. I quickly found relevant openings and applied seamlessly. The interface is intuitive and user-friendly, making the process stress-free. I highly recommend it to all job seekers!. period"`,
   },
   {
     id: 2,
     image: T2,
     name: "Alice Beck",
     location: "Lagos, Nigeria",
-    testimonial:
-      "“Lorem ipsum dolor sit amet consectetur. Etiam elit nisl aliquam tempor purus ac. Vestibulum eu euismod enim elit. Nunc phasellus aliquet eu gravida massa vel.”",
+    testimonial: `"I was impressed by the app's efficiency and design. It streamlined my job search, providing useful tools to track applications and receive timely updates. It's a must-have for anyone looking to enhance their job search experience."`,
   },
   {
     id: 3,
     image: T3,
     name: "Xander Cage",
     location: "Germany",
-    testimonial:
-      "“Lorem ipsum dolor sit amet consectetur. Etiam elit nisl aliquam tempor purus ac. Vestibulum eu euismod enim elit. Nunc phasellus aliquet eu gravida massa vel.”",
+    testimonial: `"The app's features exceeded my expectations. It offers a comprehensive platform for creating and submitting applications. The organized layout and helpful tips made job hunting much less daunting. A fantastic resource for job hunters!"`,
   },
 ];
 import { MdLogout, MdClose } from "react-icons/md";
