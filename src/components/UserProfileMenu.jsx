@@ -5,27 +5,20 @@ import {
   MdHelpOutline,
 } from "react-icons/md";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import { useState, useEffect } from "react";
 import Loader from "../components/Loader";
+import { useQuery } from "@tanstack/react-query";
+import { customFetch } from "../utils/axiosInstance";
 
 const UserProfileMenu = () => {
   const token = localStorage.getItem("token");
-  const [user, setUser] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const getUserData = async () => {
-      const { data } = await axios(
-        "https://jobme-server.onrender.com/api/v1/user",
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      setUser(data.user);
-      setIsLoading(false);
-    };
-
-    getUserData();
-  }, []);
+  const { isLoading, data } = useQuery({
+    queryKey: ["userProfile"],
+    queryFn: () =>
+      customFetch.get("/user", {
+        headers: { Authorization: `Bearer ${token}` },
+      }),
+  });
 
   return (
     <div
@@ -56,7 +49,7 @@ const UserProfileMenu = () => {
         <div className="d-flex gap-2 align-items-center border border-dark border-start-0 border-end-0 py-1 mt-2">
           <div>
             <img
-              src={user?.image}
+              src={data.data.user?.image}
               style={{ width: "41px", height: "41px" }}
               alt=""
               className="rounded-circle"
@@ -64,9 +57,12 @@ const UserProfileMenu = () => {
           </div>
           <div>
             <h6>
-              {user?.firstName} {user?.lastName}
+              {data.data.user?.firstName} {data.data.user?.lastName}
             </h6>
-            <small style={{ fontSize: "12px" }}> {user?.email} </small>
+            <small style={{ fontSize: "12px" }}>
+              {" "}
+              {data.data.user?.email}{" "}
+            </small>
           </div>
         </div>
       ) : (

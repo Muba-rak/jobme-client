@@ -44,7 +44,7 @@ const Contact = () => {
               {info.map((item, index) => {
                 const { icon, heading, content, main } = item;
                 return (
-                  <div className="col-lg-4 my-3 my-md-0 mx-auto">
+                  <div key={index} className="col-lg-4 my-3 my-md-0 mx-auto">
                     <div
                       className="shadow py-5 pb-5 rounded-4 text-center"
                       style={{ height: "266px" }}

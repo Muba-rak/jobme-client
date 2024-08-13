@@ -14,6 +14,7 @@ import {
 import { Suspense } from "react";
 import FallBackLoader from "./components/FallBackLoader";
 import Private from "./components/Private";
+
 function App() {
   return (
     <>

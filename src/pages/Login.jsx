@@ -8,8 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { loginschema } from "../utils/formValidator";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { customFetch } from "../utils/axiosInstance";
 
 const Login = () => {
   const redirect = useNavigate();
@@ -45,10 +45,7 @@ const Login = () => {
     // Handle form submission
     data.email = data.email.toLowerCase();
     try {
-      const { data: result } = await axios.post(
-        "https://jobme-server.onrender.com/api/v1/login",
-        data
-      );
+      const { data: result } = await customFetch.post("/login", data);
       setIsSubmitting(false);
       if (result.success) {
         localStorage.setItem("token", result.token);

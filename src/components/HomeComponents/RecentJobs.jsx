@@ -1,27 +1,14 @@
 import React, { useState, useEffect } from "react";
 import JobCard from "../JobCard";
 import Loader from "../Loader";
-import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { customFetch } from "../../utils/axiosInstance";
+
 const RecentJobs = () => {
-  const [jobs, setJobs] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const getRecentJobs = async () => {
-    try {
-      const { data } = await axios(
-        "https://jobme-server.onrender.com/api/v1/jobs/latest"
-      );
-      setJobs(data.jobs);
-      setIsLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getRecentJobs();
-  }, []);
-
+  const { isLoading, data, isError } = useQuery({
+    queryKey: ["recentJobs"],
+    queryFn: () => customFetch.get("/jobs/latest"),
+  });
   if (isLoading) {
     return <Loader height={"300px"} />;
   }
@@ -29,7 +16,7 @@ const RecentJobs = () => {
   return (
     <section>
       <div className="d-flex flex-wrap align-items-center justify-content-between">
-        {jobs.map((job) => {
+        {data.data.jobs.map((job) => {
           return <JobCard key={job._id} {...job} />;
         })}
       </div>

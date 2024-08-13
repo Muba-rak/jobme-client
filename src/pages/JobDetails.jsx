@@ -8,7 +8,7 @@ import {
 import Layout from "../components/Layout";
 import Loader from "../components/Loader";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import { customFetch } from "../utils/axiosInstance";
 
 const JobDetails = () => {
   const { jobId } = useParams();
@@ -18,9 +18,7 @@ const JobDetails = () => {
 
   const getJobDetails = async () => {
     setIsLoading(true);
-    const { data } = await axios(
-      `https://jobme-server.onrender.com/api/v1/jobs/${jobId}`
-    );
+    const { data } = await customFetch.get(`/jobs/${jobId}`);
     setIsLoading(false);
     setJob(data.job);
     setSimilar(data.similarJobs);

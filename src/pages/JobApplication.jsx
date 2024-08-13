@@ -1,20 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Layout from "../components/Layout";
 import MyButton from "../components/MyButton";
 import { SuccessModal } from "../components";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { validationSchema } from "../utils/formValidator";
-
+import { useNavigate } from "react-router-dom";
+import { customFetch } from "../utils/axiosInstance";
 const JobApplication = () => {
+  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const token = localStorage.getItem("token");
   const { jobId } = useParams();
+  const [user, setUser] = useState({});
 
   const {
     register,
@@ -35,8 +37,8 @@ const JobApplication = () => {
       formData.append("cover", data.cover);
       formData.append("file", data.file[0]);
 
-      const response = await axios.post(
-        `https://jobme-server.onrender.com/api/v1/jobs/apply/${jobId}`,
+      const response = await customFetch.post(
+        `/jobs/apply/${jobId}`,
         formData,
         {
           headers: {
@@ -54,9 +56,28 @@ const JobApplication = () => {
       console.log(error);
       toast.error(error?.response?.data);
       setIsSubmitting(false);
+      if (error?.response?.status === 401 || 403) {
+        navigate("/login");
+      }
+    }
+  };
+  const renderInfo = async () => {
+    try {
+      const { data } = await customFetch.get("/user", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      setUser({ ...data.user });
+    } catch (error) {
+      if (error?.response?.status === 401 || 403) {
+        navigate("/login");
+      }
     }
   };
 
+  useEffect(() => {
+    renderInfo();
+  }, []);
   return (
     <div>
       <Layout>
@@ -84,6 +105,7 @@ const JobApplication = () => {
                     errors.firstname ? "is-invalid" : ""
                   }`}
                   {...register("firstname")}
+                  defaultValue={user?.firstName}
                 />
                 <div className="invalid-feedback">
                   {errors.firstname?.message}
@@ -98,6 +120,7 @@ const JobApplication = () => {
                     errors.lastname ? "is-invalid" : ""
                   }`}
                   {...register("lastname")}
+                  defaultValue={user?.lastName}
                 />
                 <div className="invalid-feedback">
                   {errors.lastname?.message}
@@ -114,6 +137,7 @@ const JobApplication = () => {
                     errors.email ? "is-invalid" : ""
                   }`}
                   {...register("email")}
+                  defaultValue={user?.email}
                 />
                 <div className="invalid-feedback">{errors.email?.message}</div>
               </div>

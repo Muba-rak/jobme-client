@@ -8,8 +8,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { registerschema } from "../utils/formValidator";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { customFetch } from "../utils/axiosInstance";
 
 const Register = () => {
   const redirect = useNavigate();
@@ -34,10 +34,7 @@ const Register = () => {
     console.log(data);
     // Handle form submission
     try {
-      const { data: result } = await axios.post(
-        "https://jobme-server.onrender.com/api/v1/register",
-        data
-      );
+      const { data: result } = await customFetch.post("/register", data);
       setIsSubmitting(false);
       if (result.success) {
         //redirect to login

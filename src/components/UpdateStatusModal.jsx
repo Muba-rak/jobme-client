@@ -3,13 +3,14 @@ import Modal from "react-bootstrap/Modal";
 import { status } from "../data/jobs";
 import { MdClose } from "react-icons/md";
 import axios from "axios";
+import { customFetch } from "../utils/axiosInstance";
 
 const UpdateStatusModal = ({ id, showModal, setShowModal }) => {
   const token = localStorage.getItem("token");
   const updateJobStatus = async (value) => {
     try {
-      const { data } = await axios.patch(
-        `https://jobme-server.onrender.com/api/v1/jobs/${id}`,
+      const { data } = await customFetch.patch(
+        `/jobs/${id}`,
         { status: value },
         { headers: { Authorization: `Bearer ${token}` } }
       );

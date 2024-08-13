@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import UpdateStatusModal from "../components/UpdateStatusModal";
 import Loader from "../components/Loader";
-import axios from "axios";
 import moment from "moment";
 import Empty from "../components/Empty";
+import { useNavigate } from "react-router-dom";
+import { customFetch } from "../utils/axiosInstance";
 
 const AppliedJobs = () => {
+  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [updateId, setUpdateId] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -22,14 +24,16 @@ const AppliedJobs = () => {
   const getUsersJobs = async () => {
     setIsLoading(true);
     try {
-      const { data } = await axios(
-        "https://jobme-server.onrender.com/api/v1/jobs/user",
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const { data } = await customFetch.get("/jobs/user", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setIsLoading(false);
       setJobs(data.jobs);
     } catch (error) {
       console.log(error);
+      if (error?.response?.status === 401 || 403) {
+        navigate("/login");
+      }
     }
   };
   useEffect(() => {
